@@ -38,8 +38,6 @@ public class ActivityService {
         return selectActivity(activities);
     }
 
-
-
     public static ActivityDTO selectActivity (ActivityDTO[] activityDTOS){
 
         Random random = new Random();
