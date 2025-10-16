@@ -5,6 +5,7 @@ import com.weatherapiproject.appweather.model.ActivityTypeEnum;
 import com.weatherapiproject.appweather.model.WeatherDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,6 +14,9 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class ActivityService {
+
+    @Value("${base.url.activity.api}")
+    private String baseUrl;
 
     private final RestTemplate restTemplate;
     @Autowired
@@ -29,7 +33,7 @@ public class ActivityService {
         ActivityTypeEnum activity = matchingActivity.matchingActivity(weatherDTO);
         //System.out.println(activity);
 
-        ActivityDTO[] activities = restTemplate.getForObject("https://bored-api.appbrewery.com/filter?type=" + activity.toString(), ActivityDTO[].class);
+        ActivityDTO[] activities = restTemplate.getForObject(baseUrl + activity.toString(), ActivityDTO[].class);
         assert activities != null;
         return selectActivity(activities);
     }
